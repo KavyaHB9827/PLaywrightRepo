@@ -1,0 +1,60 @@
+package gettingstarted;
+
+import java.util.regex.Pattern;
+
+import org.testng.annotations.Test;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitUntilState;
+
+public class LoginLogoutWithTestNg1 {
+	@Test
+	public void loginTest() {
+		Browser browser=null;
+		Page page=null;
+		try {
+		
+		 browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(1000));
+		 page = browser.newPage();
+		 page.navigate("https://freelance-learn-automation.vercel.app/login",
+				    new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+		
+		//ASS1
+		
+		//Assert.assertEquals(page.title(), "Learn Automation Courses");
+		PlaywrightAssertions.assertThat(page).hasTitle("Learn Automation Courses");
+		
+		//page.locator("#email1").fill("admin@email.com");
+       // page.locator("xpath=//input[@name='email1']").fill("admin@email.com");
+       // page.locator("css=input[name='email1']").fill("admin@email.com");
+        
+        page.getByPlaceholder("Enter Email").fill("admin@email.com");
+        page.getByPlaceholder("Enter Password").fill("admin@123");
+        page.getByText("Sign in").nth(1).click();
+        
+        //ASS2
+        //Assert.assertTrue(page.getByText("Welcome Admin Manager to Learn Automation Courses").isVisible());
+      // PlaywrightAssertions.assertThat(page.locator(".welcomeMessage")).containsText("Welcome");
+       
+       page.getByAltText("menu").click();
+       page.getByText("Sign out").click();
+       
+       //ASS3
+     //Assert.assertTrue(page.url().contains("login"));
+       PlaywrightAssertions.assertThat(page).hasURL(Pattern.compile("login"));
+		}
+	finally {
+		page.close();
+		browser.close();
+	
+	}
+	}
+
+	
+
+}

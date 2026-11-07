@@ -1,0 +1,52 @@
+package gettingstarted;
+
+import java.util.regex.Pattern;
+
+import org.jspecify.annotations.Nullable;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.options.WaitUntilState;
+
+public class RegisterNewUser1 {
+
+	public static void main(String[] args) {
+		Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(true).setSlowMo(1000));
+		Page page = browser.newPage();
+		page.navigate("https://freelance-learn-automation.vercel.app/login",new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+		page.getByText("New user? Signup").click();
+		page.locator("#submit-btn");
+		
+		//Ass1-checking sign up button is disabled until we fill all fields 
+		PlaywrightAssertions.assertThat(page.locator("#submit-btn")).isDisabled();
+		
+		page.locator("#Name").fill("Mukesh Kataria");
+		page.getByPlaceholder("Email").fill("admin@email.com");
+		page.getByPlaceholder("Password").fill("admin@123");
+		
+		page.locator("xpath=//label[text()='automation']//preceding::input[1]").check();// take carefully content and check box is  under input tag.
+		//Ass2-check check box is checked
+		PlaywrightAssertions.assertThat(page.locator("xpath=//label[text()='automation']//preceding::input[1]")).isChecked();
+		
+		page.locator("xpath=//input[@value='Male']").click();
+		//Ass3-check male radio button is clicked
+		PlaywrightAssertions.assertThat(page.locator("xpath=//input[@value='Male']")).isChecked();
+		
+		//Ass4-after giving all input check weather sign in button is enabled
+		PlaywrightAssertions.assertThat(page.locator("#submit-btn")).isEnabled();
+		
+		//Ass-5-capturing message
+		Locator successMessage = page.getByText(Pattern.compile("Signup success",Pattern.CASE_INSENSITIVE));
+		PlaywrightAssertions.assertThat(successMessage).isVisible();
+		PlaywrightAssertions.assertThat(successMessage).containsText("Please Login");
+		@Nullable
+		String actualMessage = successMessage.textContent();
+		System.out.println("Message Captured:" +actualMessage );
+		
+	}
+
+}

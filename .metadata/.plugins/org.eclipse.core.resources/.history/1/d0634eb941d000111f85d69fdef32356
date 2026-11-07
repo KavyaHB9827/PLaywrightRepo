@@ -1,0 +1,45 @@
+package gettingstarted;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Page.NavigateOptions;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.options.WaitUntilState;
+
+public class RegisterNewUserdemo {
+
+	public static void main(String[] args) {
+	Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(1000));
+	Page page = browser.newPage();
+	page.navigate("https://freelance-learn-automation.vercel.app/login",new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+	page.getByText("New user? Signup").click();
+	page.getByText("Sign in");
+	
+	//Assertion 1
+	PlaywrightAssertions.assertThat(page.locator("Sign in")).isDisabled();
+	
+	page.getByPlaceholder("Name").fill("Mukesh Kataria");
+	page.getByPlaceholder("Email").fill("admin@email.com");
+	page.getByPlaceholder("Password").fill("admin@123");
+	page.locator("//label[text()='automation']//preceding::input[1]").check();
+	
+	//Assertion2
+	PlaywrightAssertions.assertThat(page.locator("//label[text()='automation']//preceding::input[1]")).isChecked();
+	
+	page.locator("//input[@value='Male']").click();
+	
+	//Assertion3
+	PlaywrightAssertions.assertThat(page.locator("//input[@value='Male']")).isChecked();
+	page.locator("//select[@id='state']").selectOption("Goa");
+	 String hobbies[]= {"Singing","Dancing","Playing","Reading"};
+	 page.locator(".hobbies").selectOption(hobbies);
+	
+	
+	
+	
+	}
+
+}

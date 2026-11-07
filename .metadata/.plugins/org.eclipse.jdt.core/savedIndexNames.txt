@@ -1,0 +1,26 @@
+INDEX VERSION 1.134+C:\Users\Administrator\Desktop\PlayWright\.metadata\.plugins\org.eclipse.jdt.core
+2218749427.index
+232427124.index
+360321305.index
+45841132.index
+2655286632.index
+4104760300.index
+3741323829.index
+2479326903.index
+4156385496.index
+2397656791.index
+3072141655.index
+1865797976.index
+1368815824.index
+3778579129.index
+3440360979.index
+1297622332.index
+1418386230.index
+3592821786.index
+481742117.index
+4121491317.index
+4041574722.index
+3805925288.index
+1445195751.index
+4208058530.index
+1793199423.index

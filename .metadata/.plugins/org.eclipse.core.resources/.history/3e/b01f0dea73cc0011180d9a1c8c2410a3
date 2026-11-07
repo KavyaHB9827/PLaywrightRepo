@@ -1,0 +1,35 @@
+package gettingstarted;
+
+import org.testng.annotations.Test;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+
+public class LoginLogoutWithTestNg {
+	@Test
+	public void loginTest() {
+		Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(1000));
+		Page page = browser.newPage();
+		page.navigate("https://freelance-learn-automation.vercel.app/login");
+		
+		//ASS1
+		PlaywrightAssertions.assertThat(page).hasTitle("Learn Automation Courses");
+		page.waitForTimeout(30000);//only for debugging
+		
+		page.locator("#email1").fill("admin@email.com");
+        page.locator("xpath=//input[@name='email1']").fill("admin@email.com");
+        page.locator("css=input[name='email1']").fill("admin@email.com");
+        
+
+		
+		
+		
+		
+	}
+
+	
+
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-10-29T12:47:50 IST" name="Default suite" finished-at="2026-10-29T12:48:04 IST" duration-ms="14507">
+    <groups>
+    </groups>
+    <test started-at="2026-10-29T12:47:50 IST" name="Default test" finished-at="2026-10-29T12:48:04 IST" duration-ms="14507">
+      <class name="gettingstarted.VerifyTextMessagesViaPlaywrightAssertions">
+        <test-method signature="Test()[pri:0, instance:gettingstarted.VerifyTextMessagesViaPlaywrightAssertions@8f4ea7c]" started-at="2026-10-29T12:47:50 IST" name="Test" finished-at="2026-10-29T12:48:04 IST" duration-ms="14369" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Test -->
+      </class> <!-- gettingstarted.VerifyTextMessagesViaPlaywrightAssertions -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

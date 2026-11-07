@@ -1,0 +1,41 @@
+package gettingstarted;
+
+import org.jspecify.annotations.Nullable;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Response;
+
+public class FirstPlayWrightTest {
+
+	public static void main(String[] args) {
+		Playwright pw = Playwright.create();
+		BrowserType browserType = pw.chromium();
+		Browser browser = browserType.launch(new BrowserType.LaunchOptions().setHeadless(false));
+		Page page = browser.newPage();
+		page.navigate("https://playwright.dev/java/docs/intro");
+		String title = page.title();
+		System.out.println("Title is "+title);
+		
+		page.close();
+		browser.close();
+		pw.close();
+		// 
+		 //mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen"
+		// if its not allwing you to type
+		//press ctrl c then give Y
+		//mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://freelance-learn-automation.vercel.app/login	"
+		
+		//mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen --viewport-size=800,600"
+		//mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args='codegen --device="iPhone 13"'
+		//mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args='codegen --timezone="Europe/Rome" --geolocation="41.890221,12.492348" --lang="it-IT" bing.com/maps'
+		//mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://freelance-learn-automation.ve... --save-storage=login.json"
+		//mvn exec:java -e -D	 exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen --load-storage=login.json https://freelance-learn-automation.ve..."
+
+
+		
+	}
+
+}

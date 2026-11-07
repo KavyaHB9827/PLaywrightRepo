@@ -1,0 +1,25 @@
+package gettingstarted;
+//practise page
+import com.microsoft.playwright.Browser;
+
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+
+public class LoginLogout {
+	
+
+	public static void main(String[] args) {
+		try {
+		Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+	Page page=browser.newPage();
+	page.navigate("https://freelance-learn-automation.vercel.app/login");
+	PlaywrightAssertions.assertThat(page).hasTitle(" Learn Automation Courses By Mukesh");//by default playwright assertions wait for 5 seconds
+	
+		}
+	page.close();
+	browser.close();
+	}
+	
+}

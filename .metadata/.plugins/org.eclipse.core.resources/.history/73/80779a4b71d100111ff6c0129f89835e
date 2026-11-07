@@ -1,0 +1,103 @@
+package gettingstarted;
+
+import org.jspecify.annotations.Nullable;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Response;
+
+public class FirstPlayWrightTest {
+
+	public static void main(String[] args) {
+		Playwright pw = Playwright.create();
+		BrowserType browserType = pw.chromium();
+		Browser browser = browserType.launch(new BrowserType.LaunchOptions().setHeadless(false));
+		Page page = browser.newPage();
+		page.navigate("https://playwright.dev/java/docs/intro");
+		String title = page.title();
+		System.out.println("Title is "+title);
+		
+		page.close();
+		browser.close();
+		pw.close();
+	}}
+		// 
+		 //1.mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen"
+		// if its not allwing you to type
+		//press ctrl c then give Y
+		//2.mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://freelance-learn-automation.vercel.app/login	"
+		
+		//3.mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen --viewport-size=800,600"
+		//4.mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args='codegen --device="iPhone 13"
+		//5.mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args='codegen --timezone="Europe/Rome" --geolocation="41.890221,12.492348" --lang="it-IT" bing.com/ma
+		
+		// if playwright inspector is not stagnant then use below insted 5
+		//mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://freelance-learn-automation.vercel.app/"
+		//6.mvn exec:java -e -D	 exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen --load-storage=login.json https://freelance-learn-automation.ve..."
+		
+		/*---------------------CHATGPT---------------------
+		 * Command 1 — Open Codegen without a URL
+		 * mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D "exec.args=codegen"
+		 * 
+		 * Command 2 — Open your login page directly
+		 * mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D "exec.args=codegen https://freelance-learn-automation.vercel.app/login"
+		 * 
+		 * Command 3 — Set viewport to 800 × 600
+		 * mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D "exec.args=codegen --viewport-size=800,600 https://freelance-learn-automation.vercel.app/login"
+		 * 
+		 * Command 4 — Emulate iPhone 13
+		 * mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D "exec.args=codegen --device="iPhone 13" https://freelance-learn-automation.vercel.app/login"
+		 * 
+		 * Command 5 — Open a map with Italian locale and Rome location
+		 * mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D "exec.args=codegen --timezone-id=Europe/Rome --geolocation=41.890221,12.492348 --lang=it-IT https://www.bing.com/maps
+		 * 
+		 * Command 6 — Save browser storage to login.json
+		 * mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D "exec.args=codegen --save-storage=login.json https://freelance-learn-automation.vercel.app/login"
+		 * 
+		 * Command 7 — Reopen Codegen using login.json
+		 * mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D "exec.args=codegen --load-storage=login.json https://freelance-learn-automation.vercel.app/login"
+		 */
+		
+		/*
+
+Start Codegen
+
+Use Command 2 to open the login page and record your actions.
+
+
+2
+
+Save storage
+
+Use Command 6, log in, and close Codegen.
+
+
+3
+
+Inspect login.json
+
+Check whether cookies or origins were saved.
+
+
+4
+
+Load storage
+
+Use Command 7 to see whether the saved login state is reused.
+
+
+5
+
+Try optional settings
+
+Experiment with viewport, device, timezone, or location only when needed.
+
+
+
+My recommendation: For now, save Commands 2, 6, and 7. They cover the main Codegen workflow you're learning. You don't need to memorize all seven commands; keep them as a reference and use them when required.
+
+
+		
+	*/

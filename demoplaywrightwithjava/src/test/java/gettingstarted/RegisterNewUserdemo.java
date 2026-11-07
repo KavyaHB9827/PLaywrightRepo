@@ -1,0 +1,73 @@
+package gettingstarted;
+
+import java.util.regex.Pattern;
+
+
+import com.github.javafaker.Faker;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Page.NavigateOptions;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.options.WaitUntilState;
+
+public class RegisterNewUserdemo {
+
+	public static void main(String[] args) {
+	Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(1000));
+	Page page = browser.newPage();
+	page.navigate("https://freelance-learn-automation.vercel.app/login",new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+	page.getByText("New user? Signup").click();
+	page.getByText("Sign in");
+	
+	//Assertion 1
+	PlaywrightAssertions.assertThat(page.locator(".submit-btn")).isDisabled();
+	
+	page.getByPlaceholder("Name").fill(new Faker().name().fullName());
+	//page.getByPlaceholder("Email").fill("admin@email.com");
+	//page.getByPlaceholder("Email").fill("automation_"+System.currentTimeMillis()+"@gmail.com");
+	//page.getByPlaceholder("Email").fill(new Faker().internet().safeEmailAddress());
+	page.getByPlaceholder("Email").fill(new  Faker().name().firstName()+""+new Faker().name().lastName()+"@gmail.com");
+	
+	page.getByPlaceholder("Password").fill(new Faker().internet().password());
+	page.locator("//label[text()='automation']//preceding::input[1]").check();
+	
+	//Assertion2
+	PlaywrightAssertions.assertThat(page.locator("//label[text()='automation']//preceding::input[1]")).isChecked();
+	
+	page.locator("//input[@value='Male']").click();
+	
+	//Assertion3
+	PlaywrightAssertions.assertThat(page.locator("//input[@value='Male']")).isChecked();
+	page.locator("//select[@id='state']").selectOption("Goa");
+	 String hobbies[]= {"Singing","Dancing","Playing","Reading"};
+	 page.locator("#hobbies").selectOption(hobbies);
+	 
+	 //Assertion4
+	 PlaywrightAssertions.assertThat(page.locator(".submit-btn")).isEnabled();
+	 page.locator(".submit-btn").click();
+	// page.waitForTimeout(5000);
+	 
+	// Assertion5: capture and validate the sign up success message (do this BEFORE any wait)
+    Locator successMessage = page.getByText(Pattern.compile("Signup success", Pattern.CASE_INSENSITIVE));
+    PlaywrightAssertions.assertThat(successMessage).isVisible();
+    PlaywrightAssertions.assertThat(successMessage).containsText("Please login");
+     String actualMessage = successMessage.textContent();
+     System.out.println("Message captured:" + actualMessage);
+	 
+	
+		// page.waitForTimeout(5000);
+		 
+		 page.clock();
+		 browser.close();
+		 
+		 
+	// 8861114756---MAHESH.....
+	
+	
+	}
+
+}

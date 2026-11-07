@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.microsoft.playwright.Playwright.CreateOptions"/>
+    <fullyQualifiedTypeName name="org.testng.Assert"/>
+    <fullyQualifiedTypeName name="com.microsoft.playwright.Playwright"/>
+    <fullyQualifiedTypeName name="com.microsoft.playwright.BrowserType.LaunchOptions"/>
+    <fullyQualifiedTypeName name="com.microsoft.playwright.BrowserType"/>
+    <fullyQualifiedTypeName name="com.microsoft.playwright.Page.NavigateOptions"/>
+    <fullyQualifiedTypeName name="com.microsoft.playwright.options.WaitUntilState"/>
+    <fullyQualifiedTypeName name="com.microsoft.playwright.assertions.PlaywrightAssertions"/>
+    <fullyQualifiedTypeName name="com.github.javafaker.Faker"/>
+    <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
+</qualifiedTypeNameHistroy>

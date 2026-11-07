@@ -1,0 +1,76 @@
+package gettingstarted;
+
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.options.WaitUntilState;
+
+import java.util.regex.Pattern;
+
+import com.github.javafaker.Faker;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.Page;
+
+public class RegisterNewUser {
+
+	public static void main(String[] args) {
+		Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(1000));
+		Page page = browser.newPage();
+		page.navigate("https://freelance-learn-automation.vercel.app/login",new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+		page.getByText("New user? Signup").click();
+		page.locator(".submit-btn");
+		//Ass1
+		PlaywrightAssertions.assertThat(page.locator(".submit-btn")).isDisabled();
+		
+		
+		page.locator("#name").fill(new Faker().name().fullName());
+		//page.getByPlaceholder("Email").fill("automation_"+System.currentTimeMillis()+"@gmail.com");//to generate random email
+		page.getByPlaceholder("Email").fill(new Faker().name().firstName()+""+new Faker().name().lastName()+"@gmail.com");
+		
+		page.getByPlaceholder("Password").fill("admindemo@123"); 
+		page.locator("xpath=//label[text()='automation']//preceding::input[1]").click();//chechbox also works  clicking automation text also works but for validation take checkbox only
+		//or
+		//page.getByText("automation").click();
+		
+		//Ass2
+		PlaywrightAssertions.assertThat(page.locator("xpath=//label[text()='automation']//preceding::input[1]")).isChecked();
+		
+		page.locator("xpath=//input[@value='Male']").click();
+		
+		//Ass3
+		PlaywrightAssertions.assertThat(page.locator("xpath=//label[text()='automation']//preceding::input[1]")).isChecked();
+		
+		page.locator("#state").selectOption("Goa");
+		 String hobbies[]= {"Playing","Swimming","Dancing"};
+		 page.locator("#hobbies").selectOption(hobbies);
+		 
+		 //Ass4
+		 PlaywrightAssertions.assertThat(page.locator(".submit-btn")).isEnabled();
+		 
+		 page.locator(".submit-btn").click();
+		 // Ass5: capture and validate the signup success message (do this BEFORE any wait)
+			Locator successMessage = page.getByText(Pattern.compile("Signup success", Pattern.CASE_INSENSITIVE));
+
+			PlaywrightAssertions.assertThat(successMessage).isVisible();
+			PlaywrightAssertions.assertThat(successMessage).containsText("Please login");
+
+			// capture the text into a variable if you want to print or log it
+			String actualMessage = successMessage.textContent();
+			System.out.println("Message captured: " + actualMessage);
+
+		 page.waitForTimeout(5000);
+		 
+		 page.clock();
+		 browser.close();
+		 
+		 
+		
+		
+		
+		
+			
+	}
+
+}

@@ -1,0 +1,36 @@
+package gettingstarted;
+
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+
+public class LoginLogout {
+
+	public static void main(String[] args) {
+		Browser browser = null;
+		Page page = null;
+		try {
+		 browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+		 page = browser.newPage();
+		page.navigate("https://freelance-learn-automation.vercel.app/login");
+		PlaywrightAssertions.assertThat(page).hasTitle("Learn Automation Courses");//by default playwright assertions wait for 5 second
+		page.waitForTimeout(3000);//only for debugging
+		//page.locator("#email").fill("admin@email.com");
+		//page.locator("xpath=//input[@name='email1']").fill("admin@email.com");
+		//page.locator("css=input[name='email1]").fill("admin@email.com");
+		page.getByPlaceholder("Enter Email").fill("admin@email.com");
+		page.getByPlaceholder("Enter Password").fill("admin@email.com");
+		page.getByText("sign in").click();//once you login url will change to app you get welcome for each refresh and u get cart button so think and keep assertions accordingly
+			
+		page.waitForTimeout(3000);//by default wait for 30 sec  
+		}     
+		finally {
+		page.close();
+		browser.close();
+		
+		}//by default playwright deos not terminates session even script fails so use finally block 
+	}
+
+}

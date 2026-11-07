@@ -1,0 +1,65 @@
+package gettingstarted;
+
+import java.util.regex.Pattern;
+
+import org.jspecify.annotations.Nullable;
+
+import com.github.javafaker.Faker;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.options.WaitUntilState;
+
+public class demo1 {
+
+	public static void main(String[] args) {
+		Browser browser = Playwright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(1000));
+		Page page = browser.newPage();
+		page.navigate("https://freelance-learn-automation.vercel.app/login",new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+		page.getByText("New user? Signup").click();
+		page.locator(".submit-btn");
+		
+		//ASS1
+		PlaywrightAssertions.assertThat(page.locator(".submit-btn")).isDisabled();
+		
+		page.getByPlaceholder("Name").fill(new Faker().name().fullName());
+		page.getByPlaceholder("Email").fill(new Faker().internet().safeEmailAddress());
+		//page.getByPlaceholder("Email").fill("automation_"+System.currentTimeMillis()+"@gmail.com");
+		page.getByPlaceholder("Password").fill(new Faker().internet().password());
+		page.locator("//label[text()='react']//preceding::input[1]").click();
+		
+		
+		//Ass2
+		PlaywrightAssertions.assertThat(page.locator("//label[text()='react']//preceding::input[1]")).isChecked();
+		page.locator("//input[@value='Female']").click();
+		
+		page.locator("#state").selectOption("Karnataka");
+		String hobbies[]= {"Playing","Reading"};
+		page.locator("#hobbies").selectOption(hobbies);
+		
+		//ass3
+		PlaywrightAssertions.assertThat(page.locator(".submit-btn")).isEnabled();
+		page.locator(".submit-btn").click();
+		
+		//ass4
+		Locator successMessage = page.getByText(Pattern.compile("Signup success", Pattern.CASE_INSENSITIVE));
+
+		PlaywrightAssertions.assertThat(successMessage).isVisible();
+		PlaywrightAssertions.assertThat(successMessage).containsText("navigation");
+		
+		
+		
+		
+		String actualMessage = successMessage.textContent();
+		System.out.println("Error Message is :" +actualMessage );
+		
+		page.close();
+		browser.close();
+		
+
+	}
+
+}

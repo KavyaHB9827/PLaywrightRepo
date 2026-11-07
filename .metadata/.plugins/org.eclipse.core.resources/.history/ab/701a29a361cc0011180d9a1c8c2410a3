@@ -1,0 +1,15 @@
+package gettingstarted;
+//practise page
+import com.microsoft.playwright.Browser;
+
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+
+public class LoginLogout {
+
+	public static void main(String[] args) {
+		browser=Palywright.create().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+	}
+}
